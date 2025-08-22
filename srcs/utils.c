@@ -18,15 +18,19 @@ int is_digit(char *av) // non e' **Av perche voglio scorrere una sola stringa al
 
     i = 0;
     if (!av || !av[0])
-        return (0);
+        return (1);
     while (av[i])
     {
         if (av[i] < '0' || av[i] > '9')
-            return (0);
+            return (1);
         i++;
     }
-    return (1);
+    return (0);
 }
+
+/*
+    manca che il check per INT_MAX
+*/
 
 int ft_atoi(char *str)
 {
@@ -39,6 +43,8 @@ int ft_atoi(char *str)
         i++;
     while (str[i] >= '0' && str[i] <= '9')
     {
+        if (nbr > (LONG_MAX - (str[i] - '0')) / 10)
+            return (-1); // overflow
         nbr = nbr * 10 + (str[i] - '0');
         i++;
     }
