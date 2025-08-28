@@ -16,6 +16,9 @@
 # define PHILO_MAX 200
 # define PHILO_MIN 1
 
+# define VALID 0
+# define INVALID -1
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -25,38 +28,43 @@
 #include <sys/time.h> 
 #include <stddef.h>
 
-typedef struct s_simulation t_simulation;
+typedef struct s_simulation t_sim;
 
 typedef struct s_philo
 {
+    pthread_t thread;
     int index;
-    long meals_counter;
-    long last_meal_time;
-    bool full;
-    pthread_mutex_t left_fork;
+    int philo_nbr;
+    int eating; //
+    int meals_to_eat;
+    int meals_eaten;
+    int *dead; // flag
+    size_t last_meal; // 
+    size_t time_to_eat;
+    size_t time_to_sleep;
+    size_t time_to_die;
+    size_t start_time;
+    pthread_mutex_t *left_fork;
     pthread_mutex_t *right_fork;
-    struct s_simulation *simulation;
+    pthread_mutex_t	*print_lock;
+	pthread_mutex_t	*meal_lock;
+	pthread_mutex_t	*dead_lock;
 }   t_philo;
 
 typedef struct s_simulation
 {
-    long philo_nbr;
-    long time_to_die;
-    long time_to_sleep;
-    long time_to_eat;
-    long nbr_limit_meals;
-    long start_simulation;
-    bool end_simulation;
-    t_philo *philo;
-	pthread_mutex_t	print;
-	pthread_mutex_t	m_stop;
-	pthread_mutex_t	m_eat;
-	pthread_mutex_t	dead;
-}   t_simulation;
+    int dead_flag; // flag to set to zero at the begin of the simulation
+    pthread_mutex_t	print_lock;
+	pthread_mutex_t	meal_lock;
+	pthread_mutex_t	dead_lock;
+    pthread_mutex_t forks[PHILO_MAX]; // array of forks
+	t_philo *philo;
+}   t_sim;
 
 int check_args(int ac, char **av);
 int ft_atoi(char *str);
-int is_digit(char *av);
+int no_digit(char *av);
 int error_message(const char *message, int exit_code);
+void init_simulation(t_sim *sim, t_philo *philos);
 
 #endif

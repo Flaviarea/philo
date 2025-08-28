@@ -7,7 +7,8 @@ RM = rm -rf
 SRCS = srcs/main.c\
 	srcs/parsing.c\
 	srcs/utils.c\
-	srcs/errors_n_frees.c
+	srcs/errors_n_frees.c\
+	srcs/init.c
 
 $(NAME) :
 	gcc $(CFLAGS) $(SRCS) -o $(NAME)

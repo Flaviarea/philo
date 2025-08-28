@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-int is_digit(char *av) // non e' **Av perche voglio scorrere una sola stringa alla volta
+int no_digit(char *av) // non e' **Av perche voglio scorrere una sola stringa alla volta
 {
     int i;
 
@@ -30,9 +30,6 @@ int is_digit(char *av) // non e' **Av perche voglio scorrere una sola stringa al
     return (0); // corretto
 }
 
-/*
-    manca che il check per INT_MAX
-*/
 
 int ft_atoi(char *str)
 {
